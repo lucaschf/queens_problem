@@ -10,7 +10,7 @@ int main() {
 
     FILE *f = fopen("output.txt", "w");
 
-    solveProblem(0, &solutions, f);
+    solveProblem(2, &solutions, f);
 
     printf("\nNumero de solucoes %d", solutions);
 

@@ -14,6 +14,12 @@ int board[BOARD_DIMENSION][BOARD_DIMENSION];
 
 int isSafe(int line, int column);
 
+/**
+ * Saves the solution and its number to a file
+ *
+ * @param solution
+ * @param output
+ */
 void logSolution(int solution, FILE *output) {
     int i;
     int j;
@@ -58,6 +64,12 @@ void solveProblem(int column, int *solutions, FILE *output) {
     execute(column, solutions, output);
 }
 
+/**
+ * Checks whether the queen can occupy that line without being attacked
+ *
+ * @param line
+ * @return 1 if true, 0 otherwise
+ */
 int isLineFree(int line) {
     int i;
 
@@ -69,6 +81,12 @@ int isLineFree(int line) {
     return 1;
 }
 
+/**
+ * Checks whether the queen can occupy that column without being attacked
+ *
+ * @param column
+ * @return 1 if true, 0 otherwise
+ */
 int isColumnFree(int column) {
     int i;
 
@@ -80,6 +98,13 @@ int isColumnFree(int column) {
     return 1;
 }
 
+/**
+ * Check if the queen can occupy the position without being attacked through the main diagonal
+ *
+ * @param line
+ * @param column
+ * @return 1 if true, 0 otherwise
+ */
 int isDiagonalFree(int line, int column) {
     int i;
     int j;
@@ -97,6 +122,12 @@ int isDiagonalFree(int line, int column) {
     return 1;
 }
 
+/**
+ * Check if the queen can occupy the position without being attacked through the secondary diagonal
+ * @param line
+ * @param column
+ * @return 1 if true, 0 otherwise
+ */
 int isSecondaryDiagonalFree(int line, int column) {
     int i;
     int j;
@@ -114,6 +145,12 @@ int isSecondaryDiagonalFree(int line, int column) {
     return 1;
 }
 
+/**
+ * Checks whether a position is safe for occupation
+ * @param line
+ * @param column
+ * @return
+ */
 int isSafe(int line, int column) {
     return isLineFree(line) &&
            isColumnFree(column) &&
