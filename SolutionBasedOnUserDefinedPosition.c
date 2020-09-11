@@ -3,16 +3,14 @@
 //
 
 #include <stdio.h>
+#include "SolutionBasedOnUserDefinedPosition.h"
 
 #define QUEEN_COUNT 8
 
 int solutionsCount = 0;
 int queens[QUEEN_COUNT];
 
-typedef struct {
-    int x;
-    int y;
-} Position;
+Position entryPoint;
 
 Position createPosition(int x, int y) {
     Position p;
@@ -61,53 +59,59 @@ int isAttacked(Position from, Position target) {
 
 int isSafePlace(int k) {
     int i;
+    Position target = createPosition(k, queens[k]);
 
     for (i = 0; i < k; i++) {
-        if (isAttacked(createPosition(i, queens[i]), createPosition(k, queens[k])) == 1)
+        if (isAttacked(createPosition(i, queens[i]), target))
             return 0;
     }
 
     return 1;
 }
 
-void solve(int k) {
-    if (queens[0] > 7) // already ran through all possible positions and found the solution.
+void solve(int index) {
+    if (queens[0] >= QUEEN_COUNT) // already ran through all possible positions and found the solution.
         return;
 
-    if (queens[k] > 7) // found all solutions based on this position.
+    if (queens[index] >= QUEEN_COUNT) // found all solutions based on this position.
     {
-        k--;
-        queens[k]++; // steps into next queen's position
+        index--; // step backward to the previous queen
+        if (index != entryPoint.y) { // we do not move the queen from the entry point
+            queens[index]++; // steps into next queen's position
+        } else
+            index--; // moves bac
 
-        solve(k);
+        solve(index);
     }
 
-    if (k == 7 &&( isSafePlace(k)) == 1) {
+    if (index == QUEEN_COUNT - 1 && (isSafePlace(index))) {
         solutionsCount++;
         printSolution();
-        queens[k]++;
-        solve(k);
+        queens[index]++;
+
+        solve(index);
     }
 
-    if (isSafePlace(k) == 1) {
-        k++;
-        queens[k] = 0;
+    if (isSafePlace(index)) {
+        index++;
+        queens[index] = 0;
     } else {
-        queens[k]++;
+        queens[index]++;
     }
 
-    solve(k);
+    solve(index);
 }
 
-int findSolution(int k) {
+int findSolution(Position from) {
     solutionsCount = 0;
+
+    entryPoint = from;
 
     queens[0] = 0;
     for (int i = 1; i < QUEEN_COUNT; i++) {
-        queens[i] = QUEEN_COUNT;
+        queens[i] = 0;
     }
-
-    solve(k);
+    solve(from.y);
 
     return solutionsCount;
 }

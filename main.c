@@ -1,4 +1,5 @@
 #include <stdio.h>
+
 #include "SolutionBasedOnUserDefinedPosition.h"
 
 
@@ -33,8 +34,22 @@
 //}
 
 int main() {
-    printf("Solutions %d", findSolution(0));
+    int a[] = {1, 2, 3, 4, 5};
+
+//    int current = 2;
+//    int i = current -1;
+//
+//    for (; current % 5 != i; current++) {
+//        printf("\n%d", a[current % 5]);
+//    }
+
+
+//
+    Position p = createPosition(2, 0);
+    printf("Solutions %d", findSolution(p));
     return 0;
+
+
 }
 
 
