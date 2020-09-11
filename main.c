@@ -1,6 +1,10 @@
 #include <stdio.h>
+#include <locale.h>
+#include <stdlib.h>
 
 #include "SolutionBasedOnUserDefinedPosition.h"
+#include "constants.h"
+#include "queens_problem.h"
 
 
 //int main(int argc, char *argv[]) {
@@ -34,22 +38,9 @@
 //}
 
 int main() {
-    int a[] = {1, 2, 3, 4, 5};
-
-//    int current = 2;
-//    int i = current -1;
-//
-//    for (; current % 5 != i; current++) {
-//        printf("\n%d", a[current % 5]);
-//    }
-
-
-//
     Position p = createPosition(2, 0);
     printf("Solutions %d", findSolution(p));
     return 0;
-
-
 }
 
 

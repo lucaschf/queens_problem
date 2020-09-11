@@ -70,6 +70,7 @@ int isSafePlace(int k) {
 }
 
 void solve(int index) {
+
     if (queens[0] >= QUEEN_COUNT) // already ran through all possible positions and found the solution.
         return;
 
