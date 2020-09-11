@@ -3,12 +3,12 @@
 //
 
 #include "queens_problem.h"
+#include "constants.h"
 
 #include <stdio.h>
 #include <string.h>
 
 #define BOARD_DIMENSION 8
-#define SOLUTION "Solucao"
 
 int board[BOARD_DIMENSION][BOARD_DIMENSION];
 
@@ -65,7 +65,21 @@ int execute(int column, FILE *output) {
     return solutions;
 }
 
-int solveProblem(FILE *output) {
+int isValidParameters(int line, int column, char *errorMessage) {
+    if (line > BOARD_DIMENSION - 1 || line < 0) {
+        strcpy(errorMessage, INVALID_STARTING_LINE);
+        return 0;
+    }
+
+    if (column > BOARD_DIMENSION - 1 || column < 0) {
+        strcpy(errorMessage, INVALID_STARTING_COLUMN);
+        return 0;
+    }
+
+    return 1;
+}
+
+int solveProblem(int startingLine, int startingColumn, FILE *output) {
     solutions = 0;
     memset(board, 0, sizeof(board));
 

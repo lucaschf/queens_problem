@@ -13,6 +13,16 @@
  * @param output target output file
  * @return the number of possible resolutions
  */
-int solveProblem(FILE *output);
+int solveProblem(int startingLine, int startingColumn, FILE *output);
+
+/**
+ * Checks if the informed parameters are acceptable for the problem resolution.
+ *
+ * @param line the starting line.
+ * @param column the start column defined.
+ * @param errorMessage pointer to returning error message.
+ * @return 1 if accepted, 0 otherwise.
+ */
+int isValidParameters(int line, int column, char *errorMessage);
 
 #endif //QUEENS_PROBLEM_QUEENS_BOARD_H
