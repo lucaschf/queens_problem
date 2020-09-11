@@ -157,7 +157,7 @@ int isSecondaryDiagonalFree(int line, int column) {
  * Checks whether a position is safe for occupation
  * @param line
  * @param column
- * @return
+ * @return 1 if safe, 0 otherwise
  */
 int isSafe(int line, int column) {
     return isLineFree(line) &&
