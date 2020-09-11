@@ -12,6 +12,8 @@
 
 int board[BOARD_DIMENSION][BOARD_DIMENSION];
 
+int solutions = 0;
+
 int isSafe(int line, int column);
 
 /**
@@ -20,11 +22,14 @@ int isSafe(int line, int column);
  * @param solution
  * @param output
  */
-void logSolution(int solution, FILE *output) {
+void logSolution(FILE *output) {
     int i;
     int j;
 
-    fprintf(output, "%s %d\n\n", SOLUTION, solution);
+    if (!output)
+        return;
+
+    fprintf(output, "%s %d\n\n", SOLUTION, solutions);
 
     for (i = 0; i < BOARD_DIMENSION; i++) {
         for (j = 0; j < BOARD_DIMENSION; j++) {
@@ -38,30 +43,33 @@ void logSolution(int solution, FILE *output) {
     fprintf(output, "\n");
 }
 
-void execute(int column, int *solutions, FILE *output) {
-    int i;
+int execute(int column, FILE *output) {
+    int line;
 
     if (column == BOARD_DIMENSION) {
-        *solutions = *solutions + 1;
-        logSolution(*solutions, output);
-        return;
+        solutions++;
+        logSolution(output);
+        return solutions;
     }
 
-    for (i = 0; i < BOARD_DIMENSION; i++) {
-        if (isSafe(i, column)) {
-            board[i][column] = 1;
+    for (line = 0; line < BOARD_DIMENSION; line++) {
+        if (isSafe(line, column)) {
+            board[line][column] = 1;
 
-            execute(column + 1, solutions, output);
+            execute(column + 1, output);
 
-            board[i][column] = 0; // reset for next try
+            board[line][column] = 0; // reset for next try
         }
     }
+
+    return solutions;
 }
 
-void solveProblem(int column, int *solutions, FILE *output) {
+int solveProblem(FILE *output) {
+    solutions = 0;
     memset(board, 0, sizeof(board));
 
-    execute(column, solutions, output);
+    return execute(0, output);
 }
 
 /**
@@ -149,7 +157,7 @@ int isSecondaryDiagonalFree(int line, int column) {
  * Checks whether a position is safe for occupation
  * @param line
  * @param column
- * @return
+ * @return 1 if safe, 0 otherwise
  */
 int isSafe(int line, int column) {
     return isLineFree(line) &&
