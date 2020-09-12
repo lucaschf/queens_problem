@@ -44,7 +44,7 @@ void logSolution(FILE *output) {
             fprintf(output, " [%c]", itemOnPosition == 1 ? 'Q' : ' ');
         }
 
-        fprintf(output, "\n");
+        fprintf(output, "\n\n");
     }
 
     fprintf(output, "\n");
