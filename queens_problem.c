@@ -162,7 +162,8 @@ void searchPositions(int row) {
             board[row][column] = 1;
 
             if (row != initialRow)
-                searchPositions((row + 1) % BOARD_DIMENSION);  // call function to continue further accessing in circular manner.
+                searchPositions((row + 1) %
+                                BOARD_DIMENSION);  // call function to continue further accessing in circular manner.
         }
 
         board[row][column] = 0; // unmark to backtrack
@@ -186,7 +187,7 @@ int placeQueens(int column, int row, FILE *logFile) {
     memset(board, 0, sizeof(board));
     board[row][column] = 1; // positions the first queen on board
 
-    searchPositions(row + 1 % BOARD_DIMENSION); // call the backtracking function and log solutions
+    searchPositions((row + 1) % BOARD_DIMENSION); // call the backtracking function and log solutions
 
     return solutionsCount;
 }
