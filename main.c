@@ -8,10 +8,10 @@
 int main(int argc, char *argv[]) {
     setlocale(LC_ALL, "Portuguese");
 
-    // user can either or not define the starting column
+    // user can either or not define the starting row
     int row = argc >= 2 ? atoi(argv[1]) : 0;
 
-    // user can either or not define the starting line
+    // user can either or not define the starting column
     int column = argc == 3 ? atoi(argv[2]) : argc == 2 ? atoi(argv[1]) : 0;
 
     FILE *f = fopen(OUTPUT_FILE, "w");
