@@ -1,18 +1,12 @@
 //
-// Created by lucas on 9/10/2020.
+// Created by lucas on 9/11/2020.
 //
 
-#ifndef QUEENS_PROBLEM_QUEENS_BOARD_H
-#define QUEENS_PROBLEM_QUEENS_BOARD_H
+#ifndef QUEENS_PROBLEM_H
+#define QUEENS_PROBLEM_H
 
-#include <stdio.h>
+int isValidEntryPoint(int column, int row);
 
-/**
- * Tries to solve the queen's problem.
- *
- * @param output target output file
- * @return the number of possible resolutions
- */
-int solveProblem(FILE *output);
+int placeQueens(int column, int row, FILE *logFile);
 
-#endif //QUEENS_PROBLEM_QUEENS_BOARD_H
+#endif //QUEENS_PROBLEM_H
