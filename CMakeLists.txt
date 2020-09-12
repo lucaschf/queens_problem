@@ -3,4 +3,4 @@ project(QueensProblem C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(QueensProblem main.c queens_problem.c queens_problem.h constants.h SolutionBasedOnUserDefinedPosition.c SolutionBasedOnUserDefinedPosition.h)
+add_executable(QueensProblem main.c constants.h SolutionBasedOnUserDefinedPosition.c SolutionBasedOnUserDefinedPosition.h)
