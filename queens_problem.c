@@ -31,13 +31,20 @@ void logSolution(FILE *output) {
 
     fprintf(output, "%s %d\n\n", SOLUTION, solutions);
 
+    for (j = 0; j < BOARD_DIMENSION; j++) {
+        fprintf(output,"   %d", j);
+    }
+    fprintf(output,"\n");
+
+
     for (i = 0; i < BOARD_DIMENSION; i++) {
+        fprintf(output, "%d" , i);
         for (j = 0; j < BOARD_DIMENSION; j++) {
             int itemOnPosition = board[i][j];
-            fprintf(output, "[%c]\t", itemOnPosition == 1 ? 'Q' : ' ');
+            fprintf(output, " [%c]", itemOnPosition == 1 ? 'Q' : ' ');
         }
 
-        fprintf(output, "\n\n");
+        fprintf(output, "\n");
     }
 
     fprintf(output, "\n");
