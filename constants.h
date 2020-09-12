@@ -8,8 +8,7 @@
 #define UNABLE_TO_LOG_SOLUTIONS "Incapaz de realizar log das soluções."
 #define NUMBER_OF_POSSIBLE_SOLUTIONS "Numero de solucoes possiveis"
 #define SOLUTION_GENERATED_IN "Solucoes geradas em"
-#define INVALID_STARTING_LINE "Linha inicial invalida."
-#define INVALID_STARTING_COLUMN "Coluna inicial invalida."
+#define INVALID_ENTRY_POINT "Ponto de entrada invalido."
 
 #define OUTPUT_FILE "output.txt"
 #define SOLUTION "Solucao"

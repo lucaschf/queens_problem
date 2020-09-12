@@ -5,51 +5,49 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "SolutionBasedOnUserDefinedPosition.h"
+#include "queens_problem.h"
 #include "constants.h"
 
 #define BOARD_DIMENSION 8
 
-int initialRow;
+int initialRow; // used to block the entry point.
 
 int solutionsCount = 0;
 int board[BOARD_DIMENSION][BOARD_DIMENSION];
 
-FILE *f;
+FILE *output;
 
 /**
- * Saves the solution and its number to a file
+ * Logs the solution and its number to a file. The positions occupied by queen are marked with the character 'Q'
+ * while the empty positions are marked with a white space
  *
  * @param solution
  * @param output
  */
-void logSolution(FILE *output) {
+void logSolution() {
     int i;
     int j;
 
     if (!output)
         return;
 
+    if (solutionsCount != 1)
+        fprintf(output, "\n\n");
+
     fprintf(output, "%s %d\n\n ", SOLUTION, solutionsCount);
 
-    for (i = 0; i < BOARD_DIMENSION; i++) {
+    for (i = 0; i < BOARD_DIMENSION; i++) { // the board columns
         fprintf(output, "  %d ", i);
     }
-    fprintf(output, "\n");
 
     for (i = 0; i < BOARD_DIMENSION; i++) {
-        fprintf(output, "%d ", i);
+        fprintf(output, "\n%d ", i); // the current row
         for (j = 0; j < BOARD_DIMENSION; j++) {
             int itemOnPosition = board[i][j];
             fprintf(output, "[%c] ", itemOnPosition == 1 ? 'Q' : ' ');
         }
-
-        fprintf(output, "\n\n");
     }
-
-    fprintf(output, "\n");
 }
-
 
 /**
  * Checks whether the queen can occupy that row without being attacked
@@ -86,7 +84,7 @@ int isColumnFree(int column) {
 }
 
 /**
- * Check if the queen can occupy the position without being attacked through the main diagonal
+ * Checks if the queen can occupy the position without being attacked through the main diagonal
  *
  * @param row
  * @param column
@@ -110,7 +108,7 @@ int isDiagonalFree(int row, int column) {
 }
 
 /**
- * Check if the queen can occupy the position without being attacked through the secondary diagonal
+ * Checks if the queen can occupy the position without being attacked through the secondary diagonal
  * @param row
  * @param column
  * @return 1 if true, 0 otherwise
@@ -132,6 +130,14 @@ int isSecondaryDiagonalFree(int row, int column) {
     return 1;
 }
 
+/**
+ * Checks whether a position is safe for occupation. A position is safe if there are no queens on the diagonals,
+ * row or column.
+ *
+ * @param row
+ * @param column
+ * @return 1 if safe, 0 otherwise
+ */
 int isSafe(int row, int col) {
     return isRowFree(row)
            && isColumnFree(col)
@@ -139,47 +145,52 @@ int isSafe(int row, int col) {
            && isSecondaryDiagonalFree(row, col);
 }
 
-void nQueenHelper(int row) {
+void searchPositions(int row) {
     if (row == initialRow) {
-        // We have reached some solution.
-        // Print the board matrix
-        // return
+        // Reached some solution.
+        // Logs the board matrix and stops.
         solutionsCount++;
-        logSolution(f);
+        logSolution();
         return;
     }
 
+    int column;
+
     // Place at all possible positions and move to smaller problem
-    for (int column = 0; column < BOARD_DIMENSION; column++) {
+    for (column = 0; column < BOARD_DIMENSION; column++) {
         if (isSafe(row, column)) {  // if no attack, proceed
             board[row][column] = 1;
 
             if (row != initialRow)
-                nQueenHelper((row + 1) % BOARD_DIMENSION);  // call function to continue further
+                searchPositions((row + 1) % BOARD_DIMENSION);  // call function to continue further accessing in circular manner.
         }
 
         board[row][column] = 0; // unmark to backtrack
     }
 }
 
-void placeQueens(int column, int row) {
+/**
+ * Initializes the board and performs the search.
+ *
+ * @param column the column of the first queen on the board.
+ * @param row the first line on the board.
+ * @param logFile the output file of the solutions. if null, no logs will be generated.
+ * @return the number of possible solutions found.
+ */
+int placeQueens(int column, int row, FILE *logFile) {
     solutionsCount = 0;
 
     initialRow = row;
+    output = logFile;
 
     memset(board, 0, sizeof(board));
-    board[row][column] = 1;
+    board[row][column] = 1; // positions the first queen on board
 
-    nQueenHelper(row + 1 % BOARD_DIMENSION); // call the backtracking function and print solutions
+    searchPositions(row + 1 % BOARD_DIMENSION); // call the backtracking function and log solutions
+
+    return solutionsCount;
 }
 
-int main() {
-    int column = 5;
-    int row = 5;
-
-    f = fopen("output2.txt", "w");
-
-    placeQueens(column, row);
-    printf("%s: %d", NUMBER_OF_POSSIBLE_SOLUTIONS, solutionsCount);
-    return 0;
+int isValidEntryPoint(int column, int row) {
+    return (row > BOARD_DIMENSION - 1 || row < 0) || (column > BOARD_DIMENSION - 1 || column < 0) ? 0 : 1;
 }
